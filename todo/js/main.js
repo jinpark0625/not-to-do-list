@@ -2,7 +2,7 @@
 
 import Todo from '../js/todo.js'
 import ProfileImg from '../js/img.js'
-import Weather from '../js/weather.js'
+import * as weather from "../js/weather.js";
 import Clock from '../js/clock.js'
 import Paint from '../js/draw.js'
 
@@ -23,7 +23,6 @@ const ctx = canvas.getContext('2d');
 
 const todo = new Todo();
 const profileImg = new ProfileImg();
-const weather = new Weather();
 const time = new Clock();
 const paint = new Paint();
 
@@ -98,18 +97,13 @@ function loadImg(){
         profileImg.loadImg(recentImageDataUrl);
     }
 }
-function askForCoords(){
-    navigator.geolocation.getCurrentPosition(weather.handleGeoSucces, weather.handleGeoError)
+function loadCoords() {
+  const loadedCoords = localStorage.getItem("coords");
+  if (loadedCoords === null) {
+    weather.askForCoords();
+  } else {
+    const parseCoords = JSON.parse(loadedCoords);
+    weather.getWeather(parseCoords.latitude, parseCoords.longitude);
+  }
 }
 
-function loadCoords(){
-    const loadedCoords = localStorage.getItem('coords');
-    if(loadedCoords === null){
-        askForCoords();
-    } else{
-        const parseCoords = JSON.parse(loadedCoords);
-        weather.getWeather(parseCoords.latitude, parseCoords.longitude);
-        // console.log(loadedCoords);
-        // getWeather
-    }
-}
