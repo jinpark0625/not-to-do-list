@@ -34,23 +34,20 @@ export default class Weather{
         })
     }
     
-    saveCoords(coordsObj){
-        localStorage.setItem(this.COORDS, JSON.stringify(coordsObj));
-    }
-    
-    handleGeoSucces(position){
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        const coordsObj = {
-            // lati tude : latitude,
-            // longitude : longitude 밑에꺼와같다 키와 벌류가 같을때
-            latitude,
-            longitude
-        };
-        // this.saveCoords(coordsObj);
-        localStorage.setItem(this.COORDS, JSON.stringify(coordsObj));
-        // this.getWeather(latitude, longitude);
-    }
+  handleGeoSucces(position) {
+    const COORDS = "coords";
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const coordsObj = {
+      // lati tude : latitude,
+      // longitude : longitude 밑에꺼와같다 키와 벌류가 같을때
+      latitude,
+      longitude,
+    };
+    // this.saveCoords(coordsObj);
+
+    localStorage.setItem(COORDS, JSON.stringify(coordsObj));
+  }
     
     handleGeoError(position){
         console.log("can't access geo location");
